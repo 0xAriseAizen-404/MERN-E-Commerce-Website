@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#navigation-container {
+  width: 4%;
+  transition: width 0.2s ease-in-out;
+  overflow: hidden;
+}
+#navigation-container:hover {
+  width: 15%;
+}
+#navigation-container:hover .nav-item-name {
+  display: block;
+  opacity: 1;
+}
+.nav-item-name {
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}

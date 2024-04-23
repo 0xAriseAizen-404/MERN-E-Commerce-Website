@@ -1,0 +1,25 @@
+//  cyberpunk  
+    --primary-100:#FF6B6B;
+    --primary-200:#dd4d51;
+    --primary-300:#8f001a;
+    --accent-100:#00FFFF;
+    --accent-200:#00999b;
+    --text-100:#FFFFFF;
+    --text-200:#e0e0e0;
+    --bg-100:#0F0F0F;
+    --bg-200:#1f1f1f;
+    --bg-300:#353535;
+      
+
+//  purple dark black blue
+    --primary-100:#6A00FF;
+    --primary-200:#a64aff;
+    --primary-300:#ffb1ff;
+    --accent-100:#00E5FF;
+    --accent-200:#00829b;
+    --text-100:#FFFFFF;
+    --text-200:#e0e0e0;
+    --bg-100:#1A1A1A;
+    --bg-200:#292929;
+    --bg-300:#404040;
+      
