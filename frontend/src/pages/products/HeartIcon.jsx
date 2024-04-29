@@ -29,7 +29,7 @@ export const HeartIcon = ({ product }) => {
     }
   };
   return (
-    <div className="absolute top-5 right-5 cursor-pointer">
+    <div className="absolute top-2 right-2 cursor-pointer">
       {isFavourite ? (
         <FaHeart onClick={toggleFavourites} className="text-[#FF6B6B]" />
       ) : (

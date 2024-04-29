@@ -15,7 +15,9 @@ import {
   addProductReview,
   fetchTopProducts,
   fetchNewProducts,
+  filterProducts,
 } from "../controllers/productController.js";
+import { fileFrom } from "node-fetch";
 
 router
   .route("/")
@@ -34,5 +36,7 @@ router
   .get(getProductById)
   .put(authenticate, authorizeAdmin, formidable(), updateProduct)
   .delete(authenticate, authorizeAdmin, deleteProduct);
+
+router.route("/filtered-products").post(filterProducts);
 
 export default router;

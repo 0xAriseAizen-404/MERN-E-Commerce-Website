@@ -7,7 +7,7 @@ export const SmallProduct = ({ product }) => {
       <img
         src={product.image}
         alt={product.name}
-        className="w-full h-[13rem] rounded object-fit"
+        className="w-full h-[13rem] rounded object-contain"
       />
       <HeartIcon product={product} />
       <Link to={`/product/${product._id}`} className="">

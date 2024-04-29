@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import { FavouritesCount } from "../products/FavouritesCount";
+import { CartCount } from "../products/CartCount";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -67,14 +68,15 @@ const Navigation = () => {
         </Link>
         <Link
           to="/cart"
-          className="flex items-center gap-2 transition-transform transform hover:translate-x-2"
+          className="flex items-center gap-2 transition-transform transform hover:translate-x-2 relative"
         >
           <AiOutlineShoppingCart size={26} />
-          <span className="nav-item-name hidden">Cart</span>{" "}
+          <span className="nav-item-name hidden">Cart</span>
+          <CartCount />
         </Link>
         <Link
           to="/favourites"
-          className="flex items-center gap-2 transition-transform transform hover:translate-x-2 relative border-5 border-red-500"
+          className="flex items-center gap-2 transition-transform transform hover:translate-x-2 relative"
         >
           <FaHeart size={26} />
           <span className="nav-item-name hidden">Favourites</span>
@@ -82,7 +84,7 @@ const Navigation = () => {
         </Link>
       </div>
 
-      <div className="relative border-red-500 border-solid">
+      <div className="relative">
         <button
           onClick={toggleDropDown}
           className="flex items-center text-gray-800 focus:outline-none"

@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Ratings } from "./Ratings";
-import { useGetTopProductsQuery } from "../../redux/api/productApiSlice";
+import {
+  useGetTopProductsQuery,
+  useGetProductByIdQuery,
+} from "../../redux/api/productApiSlice";
 import { SmallProduct } from "./SmallProduct";
 import { Loader } from "../../components/Loader";
 
@@ -15,6 +18,7 @@ export const ProductTabs = ({
   setComment,
   product,
 }) => {
+  const { id: productId } = useParams();
   const { data, isLoading } = useGetTopProductsQuery();
   const [activeTab, setActiveTab] = useState(1);
   if (isLoading) return <Loader />;
@@ -135,11 +139,14 @@ export const ProductTabs = ({
             {!data ? (
               <Loader />
             ) : (
-              data.map((product) => (
-                <div key={product._id}>
-                  <SmallProduct product={product} />
-                </div>
-              ))
+              data.map(
+                (product) =>
+                  product._id !== productId && (
+                    <div key={product._id}>
+                      <SmallProduct product={product} />
+                    </div>
+                  )
+              )
             )}
           </div>
         )}

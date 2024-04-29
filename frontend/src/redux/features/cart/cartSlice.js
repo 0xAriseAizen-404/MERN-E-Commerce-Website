@@ -13,11 +13,14 @@ const cartSlice = createSlice({
       const { user, rating, numReviews, reviews, ...item } = action.payload;
       const existingItem = state.cartItems.find((x) => x._id === item._id);
       if (existingItem) {
-        state.cartItems.map((x) => (x._id === existingItem._id ? item : x));
+        state.cartItems = state.cartItems.map((x) =>
+          x._id === existingItem._id ? item : x
+        );
       } else {
         state.cartItems = [...state.cartItems, item];
       }
-      return updateCart(state, item);
+      return updateCart(state);
+      // return updateCart(state, item);
     },
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);

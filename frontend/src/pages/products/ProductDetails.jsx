@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   useGetProductDetailsQuery,
@@ -19,10 +19,12 @@ import moment from "moment";
 import { HeartIcon } from "./HeartIcon";
 import { Ratings } from "./Ratings";
 import { ProductTabs } from "./ProductTabs";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 export const ProductDetails = () => {
   const { id: productId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -36,6 +38,7 @@ export const ProductDetails = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -50,12 +53,18 @@ export const ProductDetails = () => {
       toast.error(error?.data?.message || error.message);
     }
   };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/");
+  };
+
   return (
     <>
       <div>
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-white font-semibold hover:underline ml-[5rem]"
         >
           Go Back
         </Link>
@@ -68,12 +77,12 @@ export const ProductDetails = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[10rem]">
+          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[5rem]">
             <div>
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full xl:w-[30rem] lg:w-[25rem] md:w-[20rem] mr-[2rem] xl:h-[30rem] lg:h-[25rem] md:h-[20rem]"
+                className="w-full xl:w-[30rem] lg:w-[25rem] md:w-[20rem] mr-[2rem] xl:h-[30rem] lg:h-[25rem] md:h-[20rem] object-contain"
               />
               <HeartIcon product={product} />
             </div>
@@ -130,7 +139,7 @@ export const ProductDetails = () => {
                       name=""
                       id=""
                       value={qty}
-                      onChange={(e) => setQty(e.target.value)}
+                      onChange={(e) => setQty(Number(e.target.value))}
                       className="p-2 w-[6rem] text-black rounded-lg"
                     >
                       {[...Array(product.countInStock).keys()].map((x) => (
@@ -146,7 +155,7 @@ export const ProductDetails = () => {
                 <button
                   className="bg-[#dd4d51] text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
                   disabled={product.countInStock === 0}
-                  // onClick={addToCartHandler}
+                  onClick={addToCartHandler}
                 >
                   Add To Cart
                 </button>
