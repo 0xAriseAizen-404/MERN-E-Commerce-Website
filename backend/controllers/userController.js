@@ -18,6 +18,11 @@ const createUser = asyncHandler(async (req, res) => {
   if (!username || !email || !password)
     throw new Error("please check the credentials");
 
+  // const complexEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email))
+    return res.status(400).json({ message: "Invalid email format" });
+
   const userExists = await User.findOne({ email });
   if (userExists) res.status(400).send("User already exists");
 
