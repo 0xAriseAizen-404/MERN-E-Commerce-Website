@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import fetch from "node-fetch"; // Make sure to install node-fetch package
+// import fetch from "node-fetch"; // Make sure to install node-fetch package
 import Product from "./backend/models/productModel.js";
 import Category from "./backend/models/categoryModel.js";
 
