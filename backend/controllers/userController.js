@@ -24,7 +24,7 @@ const createUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Invalid email format" });
 
   const userExists = await User.findOne({ email });
-  if (userExists) res.status(400).send("User already exists");
+  if (userExists) res.status(404).json({ message: "User already exists" });
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);

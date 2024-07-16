@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import asyncHandler from "../middlewares/asyncHandler.js";
 import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 import {
   createOrder,

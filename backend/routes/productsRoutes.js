@@ -17,7 +17,7 @@ import {
   fetchNewProducts,
   filterProducts,
 } from "../controllers/productController.js";
-import { fileFrom } from "node-fetch";
+// import { fileFrom } from "node-fetch";
 
 router
   .route("/")
