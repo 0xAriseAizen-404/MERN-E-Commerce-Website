@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 #navigation-container {
+  min-width: 40px;
   width: 4%;
   transition: width 0.2s ease-in-out;
   overflow: hidden;

@@ -45,40 +45,39 @@ const Login = () => {
 
   return (
     <>
-      <section className="min-h-[100vh] pl-[10rem] flex flex-wrap">
-        <div className="mr-[4rem] mt-[5rem]">
-          <h1 className="text-2xl font-semibold mb-4">Login</h1>
+      <section className="min-h-[100vh] pl-[5vw] w-full flex flex-center gap-[2rem]">
+        <div className="p-4 max-w-lg md:w-1/2 w-full ml-[1rem]">
+          <h1 className="text-3xl text-primary-600 font-bold">Login</h1>
           <form
             onSubmit={submitHandler}
             action=""
-            className="container w-[30rem]"
+            className="w-full flex flex-col gap-2 mt-5"
           >
-            <div className="my-[2rem]">
-              <label
-                htmlFor="email"
-                className="block test-sm font-medium text-white"
-              >
+            <div className="space-y-2">
+              <label htmlFor="email" className="block font-medium text-white">
                 Email Address
               </label>
               <input
                 type="email"
                 id="email"
-                className="mt-1 p-2 border rounded w-full"
+                placeholder="Enter your email"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="my-[2rem]">
+            <div className="space-y-2">
               <label
                 htmlFor="password"
-                className="block test-sm font-medium text-white"
+                className="block font-medium text-white"
               >
                 Password
               </label>
               <input
                 type="password"
                 id="password"
-                className="mt-1 p-2 border rounded w-full"
+                placeholder="Enter your password"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
               />
@@ -86,7 +85,7 @@ const Login = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-[#dd4d51] text-white px-4 py-2 rounded cursor-pointer my-[1rem] hover:bg-[#FF6B6B]"
+              className="bg-[#dd4d51] text-white px-4 py-2 rounded cursor-pointer mt-2 hover:bg-[#FF6B6B]"
             >
               {isLoading ? "Signing In..." : "Sign In"}
             </button>
@@ -104,11 +103,13 @@ const Login = () => {
             </p>
           </div>
         </div>
-        <img
-          src="https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-3530.jpg?w=740&t=st=1712940849~exp=1712941449~hmac=67491da893e3a8de688352529d3ff4b501a716d21384fa40e0aa895976fe62bb"
-          className="h-[35rem] w-[50%] rounded-lg md:hidden sm:hidden lg:block"
-          alt=""
-        />
+        <div className="md:w-1/2 md:block hidden">
+          <img
+            src="https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-3530.jpg?w=740&t=st=1712940849~exp=1712941449~hmac=67491da893e3a8de688352529d3ff4b501a716d21384fa40e0aa895976fe62bb"
+            className="w-5/6 object-fit rounded-lg"
+            alt=""
+          />
+        </div>
       </section>
     </>
   );

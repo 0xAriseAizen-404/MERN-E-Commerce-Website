@@ -48,7 +48,7 @@ const Navigation = () => {
       style={{ zIndex: 999 }}
       className={`${
         showSideBar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between text-white w-[4%] p-4 bg-[#0F0F0F] hover:w-[15%] h-[100vh] fixed`}
+      } lg:flex flex-col justify-between text-white min-w-[30px] p-3 bg-[#0F0F0F] md:hover:w-[15vw] h-[100vh] fixed`}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4 mt-[3rem]">
@@ -57,14 +57,14 @@ const Navigation = () => {
           className="flex items-center gap-2 transition-transform transform hover:translate-x-2"
         >
           <AiOutlineHome size={26} />
-          <span className="nav-item-name hidden">Home</span>{" "}
+          <span className="nav-item-name hidden">Home</span>
         </Link>
         <Link
           to="/shop"
           className="flex items-center gap-2 transition-transform transform hover:translate-x-2"
         >
           <AiOutlineShopping size={26} />
-          <span className="nav-item-name hidden">Shopping</span>{" "}
+          <span className="nav-item-name hidden">Shopping</span>
         </Link>
         <Link
           to="/cart"
@@ -115,8 +115,8 @@ const Navigation = () => {
         </button>
         {dropDown && userInfo && (
           <ul
-            className={`absolute -right-10 mt-2 mr-14 space-y-2 bg-white text-gray-600 ${
-              !userInfo.isAdmin ? "-top-20" : "-top-80"
+            className={`absolute -right-0 mt-2 mr-14 space-y-2 bg-white text-gray-600 ${
+              !userInfo.isAdmin ? "-top-[7rem]" : "-top-[21rem]"
             }`}
           >
             {userInfo.isAdmin && (

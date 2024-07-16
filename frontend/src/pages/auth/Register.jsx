@@ -53,15 +53,15 @@ const Register = () => {
   };
 
   return (
-    <section className="pl-[10rem] h-full flex flex-wrap">
-      <div className="mr-[4rem] mt-[2rem]">
-        <h1 className="text-2xl font-semibold mb-4">Register</h1>
+    <section className="min-h-[100vh] pl-[5vw] w-full flex flex-center gap-[2rem]">
+      <div className="p-4 max-w-lg md:w-1/2 w-full ml-[1rem]">
+        <h1 className="text-3xl text-primary-600 font-bold">Register</h1>
         <form
           action=""
           onSubmit={submitHandler}
-          className="container w-[30rem] "
+          className="w-full flex flex-col gap-2 mt-5"
         >
-          <div className="my-[1rem]">
+          <div className="space-y-2">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-white"
@@ -71,13 +71,13 @@ const Register = () => {
             <input
               type="text"
               id="name"
-              className="mt-1 p-2 rounded w-full border"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter your name"
               value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div className="my-[1rem]">
+          <div className="space-y-2">
             <label
               htmlFor="email"
               className="block text-sm font-medium text-white"
@@ -87,13 +87,13 @@ const Register = () => {
             <input
               type="email"
               id="email"
-              className="mt-1 p-2 rounded w-full border"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="my-[1rem]">
+          <div className="space-y-2">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-white"
@@ -103,13 +103,13 @@ const Register = () => {
             <input
               type="password"
               id="password"
-              className="mt-1 p-2 rounded w-full border"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="my-[1rem]">
+          <div className="space-y-2">
             <label
               htmlFor="confirmPass"
               className="block text-sm font-medium text-white"
@@ -119,7 +119,7 @@ const Register = () => {
             <input
               type="password"
               id="confirmPass"
-              className="mt-1 p-2 rounded w-full border"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter confirm password"
               value={confirmPass}
               onChange={(e) => setConfirmPass(e.target.value)}
@@ -128,7 +128,7 @@ const Register = () => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-[#dd4d51] hover:bg-[#FF6B6B] text-white rounded px-4 py-2 cursor-pointer my-[1rem]"
+            className="bg-[#dd4d51] hover:bg-[#FF6B6B] text-white rounded px-4 py-2 cursor-pointer space-y-2 mt-2"
           >
             {isLoading ? "Registering..." : "Register"}
           </button>
@@ -147,11 +147,13 @@ const Register = () => {
           </p>
         </div>
       </div>
-      <img
-        src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?t=st=1712941118~exp=1712944718~hmac=d54d8dc759054b5968711b6cf90d8f7dc5895c3022064f1d6d189e91b246bd70&w=740"
-        className="h-[35rem] w-[50%] rounded-lg md:hidden sm:hidden lg:block"
-        alt=""
-      />
+      <div className="md:w-1/2 md:block hidden">
+        <img
+          src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?t=st=1712941118~exp=1712944718~hmac=d54d8dc759054b5968711b6cf90d8f7dc5895c3022064f1d6d189e91b246bd70&w=740"
+          className="w-5/6 object-fit rounded-lg"
+          alt=""
+        />
+      </div>
     </section>
   );
 };
