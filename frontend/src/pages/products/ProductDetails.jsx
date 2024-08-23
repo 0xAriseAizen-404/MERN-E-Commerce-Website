@@ -61,10 +61,10 @@ export const ProductDetails = () => {
 
   return (
     <>
-      <div>
+      <div className="pt-4">
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[5rem]"
+          className="text-white font-semibold hover:underline hover:text-primary-500 ml-[5rem]"
         >
           Go Back
         </Link>
@@ -77,22 +77,20 @@ export const ProductDetails = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[5rem]">
-            <div>
+          <div className="w-full flex md:flex-row flex-col gap-6 flex-center relative pl-[4rem] pr-[2rem] mt-4">
+            <div className="w-full md:w-3/6 h-[30rem]">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full xl:w-[30rem] lg:w-[25rem] md:w-[20rem] mr-[2rem] xl:h-[30rem] lg:h-[25rem] md:h-[20rem] object-contain"
+                className="w-full h-full object-contain"
               />
               <HeartIcon product={product} />
             </div>
-            <div className="flex flex-col justify-start gap-6">
+            <div className="w-full md:w-4/6 flex flex-col justify-start gap-6">
               <h2 className="text-2xl font-semibold">{product.name}</h2>
-              <p className=" xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-[#b0b0b0]">
-                {product.description}
-              </p>
+              <p className="text-[#b0b0b0]">{product.description}</p>
               <p className="text-5xl font-extrabold">$ {product.price}</p>
-              <div className="flex items-center justify-start gap-4 w-[20rem]">
+              <div className="flex items-center justify-start gap-4">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
                     <FaBox />
@@ -140,7 +138,7 @@ export const ProductDetails = () => {
                       id=""
                       value={qty}
                       onChange={(e) => setQty(Number(e.target.value))}
-                      className="p-2 w-[6rem] text-black rounded-lg"
+                      className="p-2 w-[6rem] text-white bg-dark-4 rounded-lg"
                     >
                       {[...Array(product.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
@@ -161,18 +159,18 @@ export const ProductDetails = () => {
                 </button>
               </div>
             </div>
-            <div className="mt-[5rem] container flex flex-wrap items-start justify-between ml-[0rem]">
-              <ProductTabs
-                loadingProductReview={loadingProductReview}
-                userInfo={userInfo}
-                submitHandler={submitHandler}
-                rating={rating}
-                setRating={setRating}
-                comment={comment}
-                setComment={setComment}
-                product={product}
-              />
-            </div>
+          </div>
+          <div className="mt-4 container flex flex-wrap items-start justify-between ml-[1rem]">
+            <ProductTabs
+              loadingProductReview={loadingProductReview}
+              userInfo={userInfo}
+              submitHandler={submitHandler}
+              rating={rating}
+              setRating={setRating}
+              comment={comment}
+              setComment={setComment}
+              product={product}
+            />
           </div>
         </>
       )}

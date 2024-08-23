@@ -24,7 +24,7 @@ export const Shop = () => {
     if (!categoryQuery.isLoading) {
       dispatch(setCategories(categoryQuery.data));
     }
-  }, [categoryQuery.data, dispatch]);
+  }, [categoryQuery.data, dispatch, categoryQuery.isLoading]);
 
   useEffect(() => {
     if (!checked.length || !radio.length) {
@@ -40,7 +40,14 @@ export const Shop = () => {
         dispatch(setProducts(filteredProducts));
       }
     }
-  }, [checked, radio, filteredProductsQuery.data, dispatch, priceFilter]);
+  }, [
+    checked,
+    radio,
+    filteredProductsQuery.data,
+    dispatch,
+    priceFilter,
+    filteredProductsQuery.isLoading,
+  ]);
 
   const handleBrandClick = (brand) => {
     const productsByBrand = filteredProductsQuery.data?.filter(
@@ -72,70 +79,70 @@ export const Shop = () => {
 
   return (
     <>
-      <div className="min-h-[100vh] mx-[5rem]">
-        <div className="flex md:flex-row gap-[1rem]">
-          <div className="bg-[#151515] p-3 my-2">
+      <div className="min-h-[100vh] ml-[2rem] md:ml-[3rem]">
+        <div className="flex flex-col-reverse md:flex-row gap-[1rem]">
+          {/* Filter Section */}
+          <div className="bg-[#151515] p-3 py-5 my-2 md:mb-0 md:self-start">
             <h2 className="text-center py-2 bg-black rounded-full">
               Filter by Categories
             </h2>
-            <div className="p-5 w-[15rem]">
+            <div className="p-5 w-full md:w-[15rem]">
               {categories?.map((c) => (
-                <>
-                  <div className="flex items-center mb-2">
-                    <input
-                      type="checkbox"
-                      id="red-checkbox"
-                      onChange={(e) => handleCheck(e.target.checked, c._id)}
-                      className="w-4 h-4 text-[#dd4d51] bg-gray-100 border-gray-300 rounded focus:ring-[#dd4d51] dark:focus:[#dd4d51] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label
-                      htmlFor="pink-checkbox"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
-                    >
-                      {c.name}
-                    </label>
-                  </div>
-                </>
+                <div key={c._id} className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    id={`category-${c._id}`}
+                    onChange={(e) => handleCheck(e.target.checked, c._id)}
+                    className="w-4 h-4 text-[#dd4d51] bg-gray-100 border-gray-300 rounded focus:ring-[#dd4d51] dark:focus:[#dd4d51] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor={`category-${c._id}`}
+                    className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                  >
+                    {c.name}
+                  </label>
+                </div>
               ))}
             </div>
+
             <h2 className="text-center py-2 bg-black rounded-full">
               Filter by Brands
             </h2>
-            <div className="p-5 w-[15rem]">
+            <div className="p-5 w-full md:w-[15rem]">
               {uniqueBrands?.map((brand) => (
-                <>
-                  <div className="flex items-center mb-2">
-                    <input
-                      type="radio"
-                      id={brand}
-                      name="brand"
-                      onChange={() => handleBrandClick(brand)}
-                      className="w-4 h-4 text-[#dd4d51] bg-gray-100 border-gray-300 focus:ring-[#dd4d51] dark:focus:[#dd4d51] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label
-                      htmlFor="pink-radio"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
-                    >
-                      {brand}
-                    </label>
-                  </div>
-                </>
+                <div key={brand} className="flex items-center mb-2">
+                  <input
+                    type="radio"
+                    id={`brand-${brand}`}
+                    name="brand"
+                    onChange={() => handleBrandClick(brand)}
+                    className="w-4 h-4 text-[#dd4d51] bg-gray-100 border-gray-300 focus:ring-[#dd4d51] dark:focus:[#dd4d51] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor={`brand-${brand}`}
+                    className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                  >
+                    {brand}
+                  </label>
+                </div>
               ))}
             </div>
+
             <h2 className="text-center py-2 bg-black rounded-full">
               Filter by Price
             </h2>
-            <div className="p-5 w-[15rem]">
+            <div className="p-5 w-full md:w-[15rem]">
               <div className="flex items-center mb-2">
                 <input
                   type="number"
                   placeholder="Enter Price"
                   value={priceFilter}
-                  onChange={(e) => handlePriceChange(e)}
-                  className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                  onChange={handlePriceChange}
+                  className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 text-dark-4 border-none"
                 />
               </div>
             </div>
+
             <button
               className="py-2 w-full rounded-md bg-[#dd4d51]"
               onClick={() => window.location.reload()}
@@ -143,9 +150,10 @@ export const Shop = () => {
               RESET
             </button>
           </div>
-          <div className="p-3">
-            <h2 className="text-center mb-2">{products?.length} Products</h2>
-            <div className="grid grid-cols-2 place-items-center">
+
+          {/* Products Section */}
+          <div className="flex-1 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {products.length === 0 ? (
                 <Loader />
               ) : (

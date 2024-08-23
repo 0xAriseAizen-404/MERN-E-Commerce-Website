@@ -31,16 +31,13 @@ export const ProductCarousel = () => {
   };
 
   return (
-    <div className="mb-4 xl:block lg:block md:block">
+    <div className="w-full md:w-1/2 mb-4 flex flex-center border-[1.5px] border-light-4 rounded-lg">
       {isLoading ? null : error ? (
         <Message variant="danger">
           {error?.data?.message || error.message}
         </Message>
       ) : (
-        <Slider
-          {...settings}
-          className="xl:w-[40rem] lg:w-[30rem] md:w-[25rem] sm:block pt-3"
-        >
+        <Slider {...settings} className="w-5/6 pt-4">
           {products.map((product) => (
             <div key={product._id} className="w-full">
               <img

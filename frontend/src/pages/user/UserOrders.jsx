@@ -5,75 +5,73 @@ import { useGetMyOrdersQuery } from "../../redux/api/orderApiSlice";
 
 export const UserOrders = () => {
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
+
   return (
-    <div className="min-h-[100vh] container mx-auto">
-      <h2 className="font-semibold text-xl mb-4">My Orders</h2>
+    <div className="min-h-[100vh] mx-auto ml-[2rem] md:ml-[4rem]">
+      <h2 className="font-semibold text-2xl my-4">My Orders</h2>
       {isLoading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error?.data?.error || error.error}</Message>
       ) : (
-        <table className="w-full">
-          <thead>
-            <tr>
-              <td className="p-2">IMAGE</td>
-              <td className="p-2">ID</td>
-              <td className="p-2">DATE</td>
-              <td className="p-2">TOTAL</td>
-              <td className="p-2">PAID</td>
-              <td className="p-2">DELIVERED</td>
-              <td className="p-2"></td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>
-                  <img
-                    src={order.orderItems[0].image}
-                    alt={order.user}
-                    className="w-[6rem] h-[6rem] mb-5"
-                  />
-                </td>
-                <td className="p-2 text-sm">{order._id}</td>
-                <td className="p-2 text-sm">
-                  {order.createdAt.substring(0, 10)}
-                </td>
-                <td className="p-2 text-sm">{order.totalPrice}</td>
-                <td className="p-2 text-sm">
-                  {order.isPaid ? (
-                    <p className="p-1 text-center bg-green-400 w-[6rem] rounded-full">
-                      Completed
-                    </p>
-                  ) : (
-                    <p className="p-1 text-center bg-red-400 w-[6rem] rounded-full">
-                      Pending
-                    </p>
-                  )}
-                </td>
-                <td className="p-2 text-sm">
-                  {order.isDelivered ? (
-                    <p className="p-1 text-center bg-green-400 w-[6rem] rounded-full">
-                      Completed
-                    </p>
-                  ) : (
-                    <p className="p-1 text-center bg-red-400 w-[6rem] rounded-full">
-                      Pending
-                    </p>
-                  )}
-                </td>
-                <td className="p-2">
-                  <Link
-                    to={`/order/${order._id}`}
-                    className="px-3 py-2 rounded text-black bg-[#dd4d51]"
+        <div className="w-full">
+          {orders.map((order) => (
+            <div
+              key={order._id}
+              className="flex gap-4 p-4 mb-4 border-b border-light-4 lg:flex-row justify-between items-center"
+            >
+              <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+                <img
+                  src={order.orderItems[0].image}
+                  alt={order.user}
+                  className="w-[6rem] h-[6rem] object-cover"
+                />
+                <div className="flex flex-col gap-1">
+                  <div className="text-sm">
+                    <span className="font-semibold">ID: </span>
+                    {order._id}
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-semibold">Date: </span>
+                    {order.createdAt.substring(0, 10)}
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-semibold">Total: </span>
+                    {order.totalPrice}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 lg:ml-auto md:flex-row lg:items-center">
+                <div className="text-sm flex flex-col gap-2 items-start">
+                  <span>Paid : </span>
+                  <p
+                    className={`p-1 text-center w-[6rem] rounded-full ${
+                      order.isPaid ? "bg-green-400" : "bg-red-400"
+                    }`}
                   >
-                    View Details
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    {order.isPaid ? "Completed" : "Pending"}
+                  </p>
+                </div>
+                <div className="text-sm flex flex-col gap-2 items-start">
+                  <span>Delivered : </span>
+                  <p
+                    className={`p-1 text-center w-[6rem] rounded-full ${
+                      order.isDelivered ? "bg-green-400" : "bg-red-400"
+                    }`}
+                  >
+                    {order.isDelivered ? "Completed" : "Pending"}
+                  </p>
+                </div>
+                <Link
+                  to={`/order/${order._id}`}
+                  className="px-3 py-2 rounded-md text-light-2 bg-primary-500 md:ml-[1rem] w-fit h-fit self-end mt-2"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

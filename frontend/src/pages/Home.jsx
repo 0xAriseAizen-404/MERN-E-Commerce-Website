@@ -7,9 +7,9 @@ import { Product } from "./products/Product";
 
 export const Home = () => {
   const { keyword } = useParams();
-  const { data, isLoading, isError, error } = useGetProductsQuery({ keyword });
+  const { data, isLoading, isError } = useGetProductsQuery({ keyword });
   return (
-    <>
+    <div className="pl-10">
       {!keyword ? <Header /> : null}
       {isLoading ? (
         <Loader />
@@ -19,8 +19,8 @@ export const Home = () => {
         </Message>
       ) : (
         <>
-          <div className="flex justify-around items-center mt-[10rem]">
-            <h1 className="text-[3rem]">Special Products</h1>
+          <div className="flex justify-between items-center py-4 px-4">
+            <h1 className="sm:text-5xl text-3xl">Special Products</h1>
             <Link
               to="/shop"
               className="bg-[#FF6B6B] rounded-full font-bold py-2 px-10"
@@ -28,7 +28,7 @@ export const Home = () => {
               Shop
             </Link>
           </div>
-          <div className="flex justify-start ml-[7rem] gap-[2rem] flex-wrap mt-[2rem]">
+          <div className="grid sm:grid-cols-3 grid-cols-1 gap-10 mt-[2rem] py-4 px-4">
             {data.products.map((product) => (
               <div key={product._id}>
                 <Product product={product} />
@@ -37,6 +37,6 @@ export const Home = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };

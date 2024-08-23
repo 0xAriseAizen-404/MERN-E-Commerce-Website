@@ -23,41 +23,66 @@ export const Cart = () => {
 
   return (
     <>
-      <div className="container flex justify-around items-start flex-wrap mx-auto mt-8">
+      <div className="w-full flex justify-around items-start flex-wrap mx-auto mt-4 pl-[2rem] sm:pl-[4rem]">
         {cartItems.length === 0 ? (
           <div>
             Your cart is Empty <Link to="/shop">Go To Shop</Link>
           </div>
         ) : (
           <>
-            <div className="flex flex-col w-[80%] min-h-[100vh] gap-2">
-              <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
+            <div className="flex flex-col w-full min-h-[100vh] gap-6">
+              <h1 className="text-2xl font-semibold">Shopping Cart</h1>
               {cartItems.map((item) => (
-                <div key={item._id} className="flex items-center gap-4">
-                  <div className="w-[5rem] h-[5rem]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full rounded object-fit"
-                    />
+                <div
+                  key={item._id}
+                  className="w-full md:w-[80%] flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-light-4 rounded-md p-3 bg-dark-2"
+                >
+                  <div className="flex justify-between items-center gap-4 md:w-auto">
+                    <div className="w-[7rem] h-[7rem]">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full rounded object-fit"
+                      />
+                    </div>
+                    <div className="md:hidden flex gap-2">
+                      <select
+                        name=""
+                        id=""
+                        className="p-2 px-4 border-rounded text-white bg-dark-4 rounded-md border-none"
+                        value={item.qty}
+                        onChange={(e) =>
+                          addToCartHandler(item, Number(e.target.value))
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((x) => (
+                          <option value={x + 1} key={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        className="text-red-500 md:hidden"
+                        onClick={() => removeFromCartHandler(item._id)}
+                      >
+                        <FaTrash size={22} />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <Link
-                      to={`/product/${item._id}`}
-                      className="text-[#dd4d51]"
-                    >
+                  <div className="flex-1 mt-4 md:mt-0">
+                    <Link to={`/product/${item._id}`} className="text-light-2">
                       {item.name}
                     </Link>
                     <div className="mt-2 text-white">{item.brand}</div>
-                    <div className="mt-2 text-white font-bold">
+                    <div className="mt-2 text-light-3 text-xl font-bold">
                       $ {item.price}
                     </div>
                   </div>
-                  <div className="w-24">
+                  <div className="hidden md:flex md:w-24">
                     <select
                       name=""
                       id=""
-                      className="w-full p-1 px-4 border-rounded text-black"
+                      className="w-full p-2 px-4 border-rounded text-white bg-dark-4 rounded-md border-none"
                       value={item.qty}
                       onChange={(e) =>
                         addToCartHandler(item, Number(e.target.value))
@@ -71,21 +96,21 @@ export const Cart = () => {
                     </select>
                   </div>
                   <button
-                    className="text-red-500"
+                    className="hidden md:flex text-red-500"
                     onClick={() => removeFromCartHandler(item._id)}
                   >
-                    <FaTrash />
+                    <FaTrash size={22} />
                   </button>
                 </div>
               ))}
-              <div className="mt-8 w-[40rem]">
+              <div className="w-full md:w-[40rem]">
                 <div className="p-4 rounded-lg">
-                  <h2 className="text-xl font-semibold b-2">
+                  <h2 className="text-xl font-semibold">
                     Items - (
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
                     )
                   </h2>
-                  <div className="text-2xl font-bold">
+                  <div className="text-2xl text-primary-600 font-bold mt-2">
                     ${" "}
                     {cartItems
                       .reduce((acc, item) => acc + item.qty * item.price, 0)

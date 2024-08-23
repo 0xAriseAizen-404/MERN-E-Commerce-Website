@@ -18,7 +18,7 @@ export const ProductCard = ({ p }) => {
   };
 
   return (
-    <div className="relative bg-[#1a1a1a] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 px-3 py-2 self-stretch">
+    <div className="relative bg-[#1a1a1a] rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-5 self-stretch">
       <Link to={`/product/${p._id}`}>
         <span className="absolute top-3 left-3 mb-3 bg-[#3d2424] text-[#ff242b] text-sm font-medium mr-2 px-2 py-0.5 rounded-full dark:bg-[#f3474c] dark:text-[#fdacac]">
           {p?.brand}

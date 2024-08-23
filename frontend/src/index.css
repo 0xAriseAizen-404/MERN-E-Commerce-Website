@@ -9,6 +9,17 @@
     @apply box-border list-none p-0 m-0 scroll-smooth;
   }
 
+  :root {
+    ::-webkit-scrollbar {
+      width: 4px;
+      background-color: orange;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: crimson;
+      border-radius: 50px;
+    }
+  }
+
   body {
     @apply bg-dark-1 text-white min-h-screen font-inter;
   }

@@ -8,7 +8,7 @@ function App() {
     <>
       <ToastContainer />
       <Navigation />
-      <main className="">
+      <main className="p-4">
         <Outlet />
       </main>
     </>
