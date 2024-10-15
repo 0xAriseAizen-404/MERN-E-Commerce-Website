@@ -41,38 +41,43 @@ export const PlaceOrder = () => {
   };
 
   return (
-    <>
+    <div className="my-4">
       <ProgressSteps step1 step2 step3 />
-      <div className="container mx-auto mt-8">
+      <div className="ml-[2.5rem] mx-auto mt-8 px-4 flex flex-col gap-4">
         {cart.cartItems.length === 0 ? (
           <Message>Your Cart is Empty</Message>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr>
-                  <td className="px-1 py-2 text-left align-top">Image</td>
-                  <td className="px-1 py-2 text-left">Product</td>
-                  <td className="px-1 py-2 text-left">Quantity</td>
-                  <td className="px-1 py-2 text-left">Price</td>
-                  <td className="px-1 py-2 text-left">Total</td>
+                <tr className="border-b">
+                  <th className="px-2 py-2 text-left">Image</th>
+                  <th className="px-2 py-2 text-left">Product</th>
+                  <th className="px-2 py-2 text-left">Quantity</th>
+                  <th className="px-2 py-2 text-left">Price</th>
+                  <th className="px-2 py-2 text-left">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {cart.cartItems.map((item, index) => (
-                  <tr key={index}>
-                    <tb className="p-2">
+                  <tr key={index} className="border-b">
+                    <td className="p-2">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-16 h-16 object-cover"
+                        className="w-16 h-16 object-cover rounded-lg"
                       />
-                    </tb>
+                    </td>
                     <td className="p-2">
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <Link
+                        to={`/product/${item._id}`}
+                        // className="text-blue-500 hover:underline"
+                      >
+                        {item.name}
+                      </Link>
                     </td>
                     <td className="p-2">{item.qty}</td>
-                    <td className="p-2">{item.price.toFixed(2)}</td>
+                    <td className="p-2">${item.price.toFixed(2)}</td>
                     <td className="p-2">
                       ${(item.qty * item.price).toFixed(2)}
                     </td>
@@ -82,52 +87,58 @@ export const PlaceOrder = () => {
             </table>
           </div>
         )}
-        <div className="mt-8">
-          <h2 className="text-lg mb-4 font-semibold">Order Summary</h2>
-          <div className="flex justify-between flex-wrap p-8 bg-[#181818]">
-            <ul className="text-lg">
+        <div className="mt-2">
+          <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
+          <div className="flex justify-between flex-wrap p-8 bg-dark-2 rounded-md">
+            <ul className="flex-1 text-lg flex flex-col gap-2">
               <li>
-                <span className="font-semibold mb-4">Items: </span>$
-                {cart.itemsPrice}
+                <span className="font-semibold">Items: </span>${cart.itemsPrice}
               </li>
               <li>
-                <span className="font-semibold mb-4">Shipping: </span>$
+                <span className="font-semibold">Shipping: </span>$
                 {cart.shippingPrice}
               </li>
               <li>
-                <span className="font-semibold mb-4">Tax: </span>$
-                {cart.taxPrice}
+                <span className="font-semibold">Tax: </span>${cart.taxPrice}
               </li>
               <li>
-                <span className="font-semibold mb-4">Total: </span>$
-                {cart.totalPrice}
+                <span className="font-semibold">Total: </span>${cart.totalPrice}
               </li>
             </ul>
             {error && <Message variant="danger">{error.data.message}</Message>}
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Shipping</h2>
+            <div className="flex-1 text-lg flex flex-col gap-2">
+              <h2 className="text-xl font-semibold">Shipping Address: </h2>
               <p>
-                <strong>Address: </strong> {cart.shippingAddress.address},{" "}
-                {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},{" "}
-                {cart.shippingAddress.country}
+                <strong>Address: </strong> {cart.shippingAddress.address}
+              </p>
+              <p>
+                <strong>City: </strong> {cart.shippingAddress.city}
+              </p>
+              <p>
+                <strong>Postal Code: </strong> {cart.shippingAddress.postalCode}
+              </p>
+              <p>
+                <strong>Country: </strong> {cart.shippingAddress.country}
               </p>
             </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
-              <strong>Method : </strong>
-              {cart.paymentMethod}
+            <div className="text-lg flex flex-col gap-2">
+              <h2 className="text-xl font-semibold">Payment Method</h2>
+              <p>
+                <strong>Method : </strong> {cart.paymentMethod}{" "}
+              </p>
             </div>
           </div>
-          <button
-            className="bg-[#dd4d51] text-white py-2 px-4 rounded-full text-lg w-full mt-4"
-            disabled={cart.cartItems.length === 0}
-            onClick={placeOrderHandler}
-          >
-            Place Order
-          </button>
-          {isLoading && <Loader />}
         </div>
+        {error && <Message variant="danger">{error.data.message}</Message>}
+        <button
+          className="shad-button_primary"
+          disabled={cart.cartItems.length === 0}
+          onClick={placeOrderHandler}
+        >
+          Place Order
+        </button>
+        {isLoading && <Loader />}
       </div>
-    </>
+    </div>
   );
 };

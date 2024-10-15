@@ -1,11 +1,29 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import Product from "../models/productModel.js";
+import { v2 as cloudinary } from "cloudinary";
+
+// Helper function to upload image to Cloudinary
+const uploadImageToCloudinary = async (image) => {
+  try {
+    const uploadResponse = await cloudinary.uploader.upload(image, {
+      asset_folder: "AAStore",
+      resource_type: "image",
+    });
+    return uploadResponse.secure_url;
+  } catch (error) {
+    console.error("Error uploading image to Cloudinary:", error.message);
+    throw new Error("Image upload failed");
+  }
+};
 
 const createProduct = asyncHandler(async (req, res) => {
   try {
     // const product = await Product.create(req.body);
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand, image } =
+      req.fields;
     switch (true) {
+      case !image:
+        return res.json({ error: "Image is required" });
       case !name:
         return res.json({ error: "Name is required" });
       case !description:
@@ -21,7 +39,13 @@ const createProduct = asyncHandler(async (req, res) => {
       default:
         break;
     }
-    const createdProduct = await new Product({ ...req.fields }).save();
+    let imageUrl = await uploadImageToCloudinary(image);
+
+    const createdProduct = await new Product({
+      ...req.fields,
+      image: imageUrl,
+    }).save();
+
     res.json(createdProduct);
   } catch (error) {
     console.log(error);
@@ -36,7 +60,8 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand, image } =
+      req.fields;
 
     // Check if any required fields are missing
     const requiredFields = {
@@ -46,6 +71,7 @@ const updateProduct = asyncHandler(async (req, res) => {
       category,
       quantity,
       brand,
+      image,
     };
     const missingField = Object.keys(requiredFields).find(
       (key) => !requiredFields[key]
@@ -57,6 +83,9 @@ const updateProduct = asyncHandler(async (req, res) => {
         } is required`,
       });
     }
+
+    let imageUrl = await uploadImageToCloudinary(image);
+    req.fields.image = imageUrl;
 
     // Update the product
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -80,6 +109,11 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const deleteProduct = asyncHandler(async (req, res) => {
   try {
+    const product = await Product.findById(req.params.id);
+    if (product.image) {
+      const imgId = event.image.split("/").pop().split(".")[0];
+      await cloudinary.uploader.destroy(imgId);
+    }
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     res.json(deletedProduct);
   } catch (error) {

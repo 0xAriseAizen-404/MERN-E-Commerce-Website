@@ -58,7 +58,7 @@ export const Shop = () => {
 
   const handleCheck = (value, id) => {
     const updatedChecked = value
-      ? [...checked, id]
+      ? [...checked, id]  
       : checked.filter((c) => c !== id);
     dispatch(setChecked(updatedChecked));
   };
@@ -82,7 +82,7 @@ export const Shop = () => {
       <div className="min-h-[100vh] ml-[2rem] md:ml-[3rem]">
         <div className="flex flex-col-reverse md:flex-row gap-[1rem]">
           {/* Filter Section */}
-          <div className="bg-[#151515] p-3 py-5 my-2 md:mb-0 md:self-start">
+          <div className="bg-dark-2 p-3 py-5 my-2 md:mb-0 md:self-start">
             <h2 className="text-center py-2 bg-black rounded-full">
               Filter by Categories
             </h2>
@@ -138,7 +138,7 @@ export const Shop = () => {
                   placeholder="Enter Price"
                   value={priceFilter}
                   onChange={handlePriceChange}
-                  className="w-full px-3 py-2 placeholder-gray-400 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 text-dark-4 border-none"
+                  className="shad-input w-full"
                 />
               </div>
             </div>

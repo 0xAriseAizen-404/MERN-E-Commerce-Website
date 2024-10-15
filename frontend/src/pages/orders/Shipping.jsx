@@ -36,10 +36,10 @@ export const Shipping = () => {
   };
 
   return (
-    <div className="container mx-auto mt-[0.5rem]">
+    <div className="mx-auto ml-[2.5rem] md:ml-0">
       <ProgressSteps step1 step2 />
       <div className="mt-[1rem] flex justify-around items-center flex-wrap">
-        <form className="w-[40rem]" onSubmit={submitHandler}>
+        <form className="w-full md:w-[40rem]" onSubmit={submitHandler}>
           <h1 className="text-2xl font-semibold mb-4">Shipping</h1>
           <div className="mb-4">
             <label htmlFor="" className="block text-white mb-2">
@@ -47,7 +47,7 @@ export const Shipping = () => {
             </label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -60,7 +60,7 @@ export const Shipping = () => {
             </label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter city"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -73,7 +73,7 @@ export const Shipping = () => {
             </label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter postal code"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
@@ -86,7 +86,7 @@ export const Shipping = () => {
             </label>
             <input
               type="text"
-              className="w-full p-2 border rounded"
+              className="mt-1 p-2 border rounded w-full shad-input"
               placeholder="Enter country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
@@ -98,12 +98,15 @@ export const Shipping = () => {
               Select Method
             </label>
             <div className="mt-2">
-              <label htmlFor="" className="inline-flex items-center">
+              <label
+                htmlFor="pay"
+                className="inline-flex items-center hover:cursor-pointer"
+              >
                 <input
                   type="radio"
                   name="paymentMethod"
                   value="PayPal"
-                  id=""
+                  id="pay"
                   className="form-radio text-[#dd4d51]"
                   checked={paymentMethod === "PayPal"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
@@ -113,10 +116,7 @@ export const Shipping = () => {
               </label>
             </div>
           </div>
-          <button
-            className="bg-[#dd4d51] text-white py-2 px-4 rounded-full text-lg w-full"
-            type="submit"
-          >
+          <button className="shad-button_primary text-lg w-full" type="submit">
             Continue
           </button>
         </form>

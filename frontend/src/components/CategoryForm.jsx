@@ -6,21 +6,19 @@ export const CategoryForm = ({
   handleDelete,
 }) => {
   return (
-    <div className="p-3">
-      <form onSubmit={handleSubmit} className="space-y-3">
+    <div className="pt-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name=""
           id=""
-          className="px-4 py-2 rounded-lg w-full border"
+          className="shad-input"
           placeholder="Category name..."
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <div className="flex justify-between">
-          <button className="bg-[#dd4d51] text-white py-2 px-4 rounded-lg hover:bg-[#FF6B6B] focus:outline-none focus:ring-[#dd4d51] focus:ring-opacity-50">
-            {buttonText}
-          </button>
+        <div className="flex justify-between gap-4">
+          <button className="shad-button_primary max-w-xs">{buttonText}</button>
           {handleDelete && (
             <button
               onClick={handleDelete}

@@ -10,12 +10,12 @@ export const AllProducts = () => {
     return <Loader />;
   }
   if (isError) {
-    return <div> Error loading products</div>;
+    return <div>Error loading products</div>;
   }
 
   return (
-    <div className="container mx-[9rem]">
-      <div className="flex flex-col p-3">
+    <div className="ml-[2rem] md:ml-[2.5rem]">
+      <div className="flex flex-col">
         <div className="ml-[2rem] text-2xl font-bold h-12">
           All Products {products.length}
         </div>
@@ -24,30 +24,30 @@ export const AllProducts = () => {
             <Link
               key={product._id}
               to={`/admin/product/update/${product._id}`}
-              className="block mb-4 overflow-hidden w-full"
+              className="block mb-4 overflow-hidden w-full bg-dark-2 p-3 rounded-md"
             >
-              <div className="w-full flex gap-4">
+              <div className="w-full flex flex-col sm:flex-row gap-4">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-[10rem] object-fit"
+                  className="w-[10rem] h-[15rem] object-fit mx-auto"
                 />
-                <div className="w-full flex flex-col p-4 justify-around gap-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-semibold">
+                <div className="w-full flex flex-col justify-around gap-2">
+                  <div className="flex justify-between items-center w-full gap-2">
+                    <span className="md:text-2xl font-semibold w-4/6">
                       {product?.name}
                     </span>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-gray-400 text-sm w-2/6 text-right">
                       {moment(product.createdAt).format("MMMM Do YYYY")}
                     </p>
                   </div>
-                  <p className="text-gray-400 xl:w-[30rem] md:w-[25rem] sm:w-[15rem] text-sm mb-4">
+                  <p className="text-gray-400 xl:w-[30rem] md:w-[25rem] text-sm mb-4">
                     {product?.description?.substring(0, 160)}...
                   </p>
                   <div className="flex justify-between items-center">
                     <Link
                       to={`/admin/product/update/${product._id}`}
-                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#dd4d51] rounded-lg hover:bg-[#FF6B6B] focus:ring-4 focus:outline-none focus:ring-[#dd4d51] dark:bg-[#dd6b6b] dark:hover:bg-[#ff1b1b] dark:focus:ring-[#FF6B6B]"
+                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#dd4d51] rounded-lg hover:bg-[#FF6B6B] focus:ring-4 focus:outline-none focus:ring-[#dd4d51]"
                     >
                       Update Product
                       <svg

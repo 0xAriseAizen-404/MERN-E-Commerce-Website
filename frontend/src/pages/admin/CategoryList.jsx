@@ -85,10 +85,10 @@ export const CategoryList = () => {
     }
   };
   return (
-    <div className="min-h-[100vh] ml-[10rem] flex flex-col md-flex-row">
+    <div className="ml-[2rem] md:ml-[4rem] flex flex-col md-flex-row mt-[1rem]">
       <AdminMenu />
       <div className="md-w-3/4 p-3">
-        Manage Categories
+        <span className="text-xl font-semibold">Manage Categories</span>
         <CategoryForm
           value={name}
           setValue={setName}
@@ -96,11 +96,12 @@ export const CategoryList = () => {
         />
         <br />
         <hr />
+        <br />
         <div className="flex flex-wrap">
           {categories?.map((category) => (
             <div key={category._id}>
               <button
-                className="bg-white border border-[#dd4d51] text-[#dd4d51] py-2 px-4 rounded-lg m-3 hover:bg-[#dd4d51] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#dd4d51] focus:ring-opacity-50"
+                className="bg-dark-2 border border-[#dd4d51] text-[#dd4d51] py-2 px-4 rounded-lg m-3 hover:bg-[#dd4d51] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#dd4d51] focus:ring-opacity-50"
                 onClick={() => {
                   setModalVisible(true);
                   setSelectedCategory(category);

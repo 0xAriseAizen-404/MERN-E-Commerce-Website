@@ -101,22 +101,22 @@ export const ProductUpdate = () => {
   };
 
   return (
-    <div className="min-h-[100vh] w-full container lg:mx-[9rem] sm:mx-[0]">
+    <div className="ml-[2rem] md:ml-[2.5rem]">
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
-        <div className="md:w-6/6 p-3">
-          <div className="h-12">Create Product</div>
+        <div className="w-full">
+          <div className="text-2xl font-semibold mb-4 mt-2">Create Product</div>
           {image && (
             <div className="text-center">
               <img
                 src={image}
                 alt="product"
-                className="block mx-auto mb-[2rem]"
+                className="block mx-auto mb-[2rem] h-[30rem] object-fit"
               />
             </div>
           )}
           <div className="mb-3 w-full">
-            <label className="border text-white block w-full text-center rounded-lg cursor-pointer font-bold py-11 px-4">
+            <label className="border-[1.5px] border-light-4 text-white block w-full text-center rounded-md cursor-pointer font-bold py-11 px-4">
               {image ? image.name : "Upload Image"}
               <input
                 type="file"
@@ -127,14 +127,14 @@ export const ProductUpdate = () => {
               />
             </label>
           </div>
-          <div className="p-6 w-full border flex flex-row flex-wrap gap-6">
+          <div className="p-6 w-full border-[1.5px] border-light-4 rounded-md grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="field-box flex flex-col gap-2">
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 name=""
                 id="name"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -145,7 +145,7 @@ export const ProductUpdate = () => {
                 type="number"
                 name=""
                 id="price"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
@@ -156,7 +156,7 @@ export const ProductUpdate = () => {
                 type="number"
                 name=""
                 id="quantity"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
@@ -167,19 +167,19 @@ export const ProductUpdate = () => {
                 type="text"
                 name=""
                 id="brand"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               />
             </div>
-            <div className="w-[85%] field-box flex flex-col gap-2">
+            <div className="field-box flex flex-col gap-2 w-full md:col-span-2">
               <label htmlFor="description">Description</label>
               <textarea
                 name=""
                 type="text"
                 id=""
                 rows="5"
-                className="p-2 bg-[#101011] border rounded-lg text-white"
+                className="shad-textarea flex-1 w-full"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
@@ -190,7 +190,7 @@ export const ProductUpdate = () => {
                 type="number"
                 name=""
                 id="stock"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full shad-input"
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
               />
@@ -200,7 +200,7 @@ export const ProductUpdate = () => {
               <select
                 name=""
                 id="category"
-                className="p-3 w-[25rem] rounded-lg border bg-[#101011] text-white"
+                className="mt-1 p-2 border rounded w-full bg-dark-4"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
@@ -211,16 +211,16 @@ export const ProductUpdate = () => {
                 ))}
               </select>
             </div>
-            <div className="w-full flex justify-between">
+            <div className="w-full flex justify-between md:col-span-2">
               <button
                 onClick={handleSubmit}
-                className="py-3 px-9 mt-5 rounded-lg text-lg font-bold bg-emerald-500"
+                className="py-2 px-10 mt-5 rounded-md text-lg font-bold bg-emerald-500"
               >
                 Update
               </button>
               <button
                 onClick={handleDelete}
-                className="py-3 px-9 mt-5 rounded-lg text-lg font-bold bg-[#dd4d51]"
+                className="py-2 px-10 mt-5 rounded-md text-lg font-bold bg-[#dd4d51]"
               >
                 Delete
               </button>

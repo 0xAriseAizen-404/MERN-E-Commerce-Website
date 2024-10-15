@@ -103,8 +103,8 @@ export const Cart = () => {
                   </button>
                 </div>
               ))}
-              <div className="w-full md:w-[40rem]">
-                <div className="p-4 rounded-lg">
+              <div className="w-full">
+                <div className="rounded-l">
                   <h2 className="text-xl font-semibold">
                     Items - (
                     {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)}
@@ -117,7 +117,7 @@ export const Cart = () => {
                       .toFixed(2)}
                   </div>
                   <button
-                    className="bg-[#dd4d51] mt-4 py-2 px-4 rounded-full text-lg w-full"
+                    className="w-full bg-primary-500 hover:bg-primary-600 hover:scale-[0.98] transition-all duration-200 text-light-1 flex gap-2 p-2 flex-center rounded-md mt-4 md:w-[80%]"
                     disabled={cartItems.length === 0}
                     onClick={() => checkoutHandler()}
                   >

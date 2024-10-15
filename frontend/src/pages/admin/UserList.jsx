@@ -6,7 +6,6 @@ import {
   useGetUsersQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,
-  useGetUserDetailsQuery,
 } from "../../redux/api/usersApiSlice";
 import { Message } from "../../components/Message";
 import { AdminMenu } from "./AdminMenu";
@@ -56,7 +55,7 @@ export const UserList = () => {
   };
 
   return (
-    <div className="p-4 min-h-[100vh]">
+    <div className="py-4">
       <h1 className="text-2xl font-semibold mb-5 text-center">Users</h1>
       {isLoading ? (
         <Loader />
@@ -65,25 +64,125 @@ export const UserList = () => {
           {error?.data.message || error.message}
         </Message>
       ) : (
-        <div className="flex flex-col md:flex-row">
-          <AdminMenu />
-          <table className="w-full mx-auto md:w-5/6">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left">ID</th>
-                <th className="px-4 py-2 text-left">Name</th>
-                <th className="px-4 py-2 text-left">Email</th>
-                <th className="px-4 py-2 text-left">Admin</th>
-                <th className="px-4 py-2 text-left"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td className="px-4 py-2">{user._id}</td>
-                  <td className="px-4 py-2">
+        <>
+          {/* For larger screens */}
+          <div className="hidden sm:flex flex-col md:flex-row">
+            <AdminMenu />
+            <table className="w-full mx-auto md:w-5/6">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left">ID</th>
+                  <th className="px-4 py-2 text-left">Name</th>
+                  <th className="px-4 py-2 text-left">Email</th>
+                  <th className="px-4 py-2 text-left">Admin</th>
+                  <th className="px-4 py-2 text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td className="px-4 py-2">{user._id}</td>
+                    <td className="px-4 py-2">
+                      {editableUserId === user._id ? (
+                        <div className="flex flex-center">
+                          <input
+                            type="text"
+                            value={editableUserName}
+                            onChange={(e) =>
+                              setEditableUserName(e.target.value)
+                            }
+                            className="w-full p-2 border rounded-lg"
+                          />
+                          <button
+                            onClick={() => updateHandler(user._id)}
+                            className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                          >
+                            <FaCheck />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-center">
+                          {user.username}{" "}
+                          <button
+                            onClick={() =>
+                              toggleEdit(user._id, user.username, user.email)
+                            }
+                          >
+                            <FaEdit className="ml-[1rem]" />
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      {editableUserId === user._id ? (
+                        <div className="flex flex-center">
+                          <input
+                            type="text"
+                            className="border rounded-lg p-2 w-full"
+                            value={editableUserEmail}
+                            onChange={(e) =>
+                              setEditableUserEmail(e.target.value)
+                            }
+                          />
+                          <button
+                            onClick={() => updateHandler(user._id)}
+                            className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
+                          >
+                            <FaCheck />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-center">
+                          {user.email}{" "}
+                          <button
+                            onClick={() =>
+                              toggleEdit(user._id, user.username, user.email)
+                            }
+                          >
+                            <FaEdit className="ml-[1rem]" />
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-2">
+                      {user.isAdmin ? (
+                        <FaCheck style={{ color: "green" }} />
+                      ) : (
+                        <FaTimes style={{ color: "red" }} />
+                      )}
+                    </td>
+                    <div className="px-4 py-2">
+                      {!user.isAdmin && (
+                        <div className="flex">
+                          <button
+                            onClick={() => deleteHandler(user._id)}
+                            className="bg-[#dd4d51] py-2 px-4 rounded-sm hover:bg-[#FF6B6B] font-bold"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* For smaller screens */}
+          <div className="sm:hidden flex flex-col gap-4">
+            <AdminMenu />
+            {users.map((user) => (
+              <div key={user._id} className="bg-dark-2 p-4 rounded-md">
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between">
+                    <span className="font-bold">ID:</span>
+                    {user._id}
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Name:</span>
                     {editableUserId === user._id ? (
-                      <div className="flex flex-center">
+                      <div className="flex">
                         <input
                           type="text"
                           value={editableUserName}
@@ -98,7 +197,7 @@ export const UserList = () => {
                         </button>
                       </div>
                     ) : (
-                      <div className="flex flex-center">
+                      <div className="flex">
                         {user.username}{" "}
                         <button
                           onClick={() =>
@@ -109,10 +208,11 @@ export const UserList = () => {
                         </button>
                       </div>
                     )}
-                  </td>
-                  <td className="px-4 py-2">
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Email:</span>
                     {editableUserId === user._id ? (
-                      <div className="flex flex-center">
+                      <div className="flex">
                         <input
                           type="text"
                           className="border rounded-lg p-2 w-full"
@@ -127,7 +227,7 @@ export const UserList = () => {
                         </button>
                       </div>
                     ) : (
-                      <div className="flex flex-center">
+                      <div className="flex">
                         {user.email}{" "}
                         <button
                           onClick={() =>
@@ -138,31 +238,30 @@ export const UserList = () => {
                         </button>
                       </div>
                     )}
-                  </td>
-                  <td className="px-4 py-2">
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Admin:</span>
                     {user.isAdmin ? (
                       <FaCheck style={{ color: "green" }} />
                     ) : (
                       <FaTimes style={{ color: "red" }} />
                     )}
-                  </td>
-                  <div className="px-4 py-2">
-                    {!user.isAdmin && (
-                      <div className="flex">
-                        <button
-                          onClick={() => deleteHandler(user._id)}
-                          className="bg-[#dd4d51] py-2 px-4 rounded-sm hover:bg-[#FF6B6B] font-bold"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )}
                   </div>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  {!user.isAdmin && (
+                    <div className="flex justify-between">
+                      <button
+                        onClick={() => deleteHandler(user._id)}
+                        className="bg-[#dd4d51] py-2 px-4 rounded-sm hover:bg-[#FF6B6B] font-bold"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
