@@ -19,6 +19,12 @@ router
   .post(createUser)
   .get(authenticate, authorizeAdmin, getAllUsers);
 
+router.post("/register", (req, res) => {
+  // Your code for handling registration
+  // console.log(req.body);
+  res.json({ message: "User registered" });
+});
+
 router.post("/auth", logInUser);
 
 router.post("/logout", logOutUser);

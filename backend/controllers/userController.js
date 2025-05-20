@@ -14,11 +14,10 @@ const printJson = (jsonOb) => {
 
 const createUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-
   if (!username || !email || !password)
     throw new Error("please check the credentials");
 
-  // const complexEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const complexEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email))
     return res.status(400).json({ message: "Invalid email format" });
@@ -28,6 +27,7 @@ const createUser = asyncHandler(async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
+  console.log(hashPassword);
 
   const newUser = new User({ username, email, password: hashPassword });
   try {
@@ -43,9 +43,12 @@ const createUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid User Data");
   }
+  return res.json(req.body);
 });
 
 const logInUser = asyncHandler(async (req, res) => {
+  console.log(1);
+
   const { email, password } = req.body;
 
   if (!email || !password) throw new Error("please check the credentials");

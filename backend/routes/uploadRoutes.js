@@ -4,9 +4,10 @@ import multer from "multer";
 
 const router = express.Router();
 
+// Set up storage for multer
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, "uploads/");
+    callback(null, "uploads/"); // Ensure this folder exists
   },
   filename: (req, file, callback) => {
     const extname = path.extname(file.originalname);
@@ -14,6 +15,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// Set up file filter for image types
 const fileFilter = (req, file, cb) => {
   const fileTypes = /jpe?g|png|webp/;
   const mimeTypes = /image\/jpe?g|image\/png|image\/webp/;
@@ -23,34 +25,40 @@ const fileFilter = (req, file, cb) => {
   if (fileTypes.test(extname) && mimeTypes.test(mimeType)) {
     cb(null, true);
   } else {
-    cb(new Error("Images only"), false);
+    cb(new Error("Only JPEG, PNG, and WebP images are allowed"), false);
   }
 };
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Optional: limit file size to 5MB
+});
 
 const uploadSingleImage = upload.single("image");
 
 router.post("/", (req, res) => {
   uploadSingleImage(req, res, (err) => {
     if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
+      // Multer-specific error (e.g., file too large)
       console.error("Multer Error:", err);
-      res.status(400).send({ message: "Error uploading image" });
+      return res
+        .status(400)
+        .json({ message: "Error uploading image", error: err.message });
     } else if (err) {
-      // An unknown error occurred.
+      // General error (e.g., invalid file type)
       console.error("Unknown Error:", err);
-      res.status(500).send({ message: "Unknown error occurred" });
+      return res.status(400).json({ message: err.message });
     } else if (!req.file) {
-      // No file provided.
-      res.status(400).send({ message: "No image file provided" });
-    } else {
-      // File uploaded successfully.
-      res.status(200).send({
-        message: "Image uploaded successfully",
-        image: `/${req.file.path}`,
-      });
+      // No file provided
+      return res.status(400).json({ message: "No image file provided" });
     }
+
+    // File uploaded successfully
+    res.status(200).json({
+      message: "Image uploaded successfully",
+      imagePath: `/uploads/${req.file.filename}`,
+    });
   });
 });
 
